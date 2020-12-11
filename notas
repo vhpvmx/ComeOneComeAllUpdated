@@ -1,0 +1,19 @@
+kovan address: 0x6e17Ce3143315815040D260083a9779Ee03a184d
+GreatestShow kovan address: 0x47Ff779b1e0c1Fc03B936500E70e9326F2799AD3
+
+
+Ref: https://medium.com/coinmonks/complete-walkthrough-deploy-a-smart-contract-to-development-ropsten-and-mainnet-howtobuidl-a7d1a89fa75a
+https://github.com/emmonspired?tab=overview&from=2020-05-01&to=2020-05-31
+Convierte todos los metodos a asincronos
+Promisify = require("bluebird")
+Promisify.promisifyAll(web3.eth)
+web3.eth.getAccountsAsync()
+
+Como obtener en decimal el valor de una variable a partir de un contrato, inicialmente lo regresa con un BN (big number en hex)
+METoken.deployed().then(instance => instance.totalSupply().then(totalSupply => totalSupply.toNumber()))
+
+truffle(ganache)> METoken.deployed().then(instance =>
+                  { instance.balanceOf(web3.eth.accounts[1]).then(console.log) })
+truffle(ganache)> BigNumber { s: 1, e: 3, c: [ 1000 ] }
+=>>>cambio por esto:
+METoken.deployed().then(instance => instance.balanceOf(accounts[0]).then(bal => bal.toNumber()) )
